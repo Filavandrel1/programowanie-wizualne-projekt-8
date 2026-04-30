@@ -18,16 +18,19 @@ public class ViewLocator : IDataTemplate
     {
         if (param is null)
             return null;
-        
-        var name = param.GetType().FullName!.Replace("ViewModel", "View", StringComparison.Ordinal);
-        var type = Type.GetType(name);
 
-        if (type != null)
+        // Walk up the inheritance chain so derived game view-models can share a base View.
+        var t = param.GetType();
+        while (t != null && t != typeof(object))
         {
-            return (Control)Activator.CreateInstance(type)!;
+            var name = t.FullName!.Replace("ViewModel", "View", StringComparison.Ordinal);
+            var type = Type.GetType(name);
+            if (type != null)
+                return (Control)Activator.CreateInstance(type)!;
+            t = t.BaseType;
         }
-        
-        return new TextBlock { Text = "Not Found: " + name };
+
+        return new TextBlock { Text = "Not Found: " + param.GetType().FullName };
     }
 
     public bool Match(object? data)

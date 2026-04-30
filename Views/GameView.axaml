@@ -1,0 +1,32 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:projekt8plsdzialaj.ViewModels"
+             x:Class="projekt8plsdzialaj.Views.GameView"
+             x:DataType="vm:GameViewModelBase">
+    <Grid RowDefinitions="Auto,*,Auto" Margin="24">
+        <StackPanel Grid.Row="0" Spacing="4">
+            <TextBlock Text="{Binding Title}" FontSize="28" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Description}" Opacity="0.7"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Margin="0,16" CornerRadius="12" Padding="24"
+                Background="#1A1A1A" BorderBrush="#333" BorderThickness="1">
+            <TextBlock Text="{Binding Status}"
+                       Foreground="White"
+                       FontSize="18"
+                       TextWrapping="Wrap"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       TextAlignment="Center"/>
+        </Border>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
+            <Button Content="🎴 Rozdaj"
+                    Command="{Binding DealCommand}"
+                    Padding="20,10" FontSize="16" FontWeight="SemiBold"/>
+            <Button Content="← Powrót do menu"
+                    Command="{Binding BackCommand}"
+                    Padding="20,10" FontSize="16"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

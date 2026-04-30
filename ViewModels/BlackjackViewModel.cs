@@ -1,0 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace projekt8plsdzialaj.ViewModels;
+
+public partial class BlackjackViewModel : GameViewModelBase
+{
+    public override string Title => "Oczko (Blackjack)";
+    public override string Description => "Zbierz jak najwięcej oczek, ale nie przekrocz 21.";
+
+    private readonly Random _rng = new();
+
+    protected override void DealCore()
+    {
+        var hand = new List<int>();
+        int sum = 0;
+        while (sum < 17)
+        {
+            int card = _rng.Next(2, 12);
+            hand.Add(card);
+            sum += card;
+        }
+
+        var verdict = sum == 21 ? "Blackjack!"
+                    : sum > 21 ? "Przegrana – fura!"
+                    : "Stoisz na " + sum + ".";
+        Status = $"Karty: {string.Join(" + ", hand)} = {sum}\n{verdict}";
+    }
+}

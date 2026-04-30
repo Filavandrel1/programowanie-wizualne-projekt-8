@@ -31,5 +31,11 @@ build_property.EnableCodeStyleSeverity =
 [/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/GameView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/MainWindow.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/MenuView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

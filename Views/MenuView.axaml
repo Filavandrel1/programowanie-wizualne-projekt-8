@@ -1,0 +1,75 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:projekt8plsdzialaj.ViewModels"
+             x:Class="projekt8plsdzialaj.Views.MenuView"
+             x:DataType="vm:MenuViewModel">
+    <Grid RowDefinitions="Auto,*" Margin="24">
+        <StackPanel Grid.Row="0" Spacing="4" HorizontalAlignment="Center">
+            <TextBlock Text="🎴 Hub Gier Karcianych"
+                       FontSize="32" FontWeight="Bold"
+                       HorizontalAlignment="Center"/>
+            <TextBlock Text="Wybierz grę i naciśnij Start"
+                       FontSize="14" Opacity="0.7"
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <UniformGrid Grid.Row="1" Columns="3" Margin="0,32,0,0">
+            <!-- Wojna -->
+            <Border Margin="12" CornerRadius="12" Padding="20"
+                    Background="#1E2A78" BorderBrush="#4A5BD8" BorderThickness="1">
+                <StackPanel Spacing="12" VerticalAlignment="Center">
+                    <TextBlock Text="⚔️" FontSize="56" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Wojna" FontSize="24" FontWeight="Bold"
+                               Foreground="White" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Pojedynek na najwyższą kartę."
+                               TextWrapping="Wrap" Foreground="#CFD4FF"
+                               HorizontalAlignment="Center" TextAlignment="Center"/>
+                    <Button Content="Start"
+                            Command="{Binding StartWarCommand}"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Padding="0,10" FontSize="16" FontWeight="SemiBold"
+                            Background="#4A5BD8" Foreground="White"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Blackjack -->
+            <Border Margin="12" CornerRadius="12" Padding="20"
+                    Background="#0E5C3A" BorderBrush="#1FAE6B" BorderThickness="1">
+                <StackPanel Spacing="12" VerticalAlignment="Center">
+                    <TextBlock Text="🃏" FontSize="56" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Oczko" FontSize="24" FontWeight="Bold"
+                               Foreground="White" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Dobierz karty i nie przekrocz 21."
+                               TextWrapping="Wrap" Foreground="#C7F0DA"
+                               HorizontalAlignment="Center" TextAlignment="Center"/>
+                    <Button Content="Start"
+                            Command="{Binding StartBlackjackCommand}"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Padding="0,10" FontSize="16" FontWeight="SemiBold"
+                            Background="#1FAE6B" Foreground="White"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Makao -->
+            <Border Margin="12" CornerRadius="12" Padding="20"
+                    Background="#7A1F1F" BorderBrush="#D84A4A" BorderThickness="1">
+                <StackPanel Spacing="12" VerticalAlignment="Center">
+                    <TextBlock Text="♠️" FontSize="56" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Makao" FontSize="24" FontWeight="Bold"
+                               Foreground="White" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Pozbądź się kart pierwszy."
+                               TextWrapping="Wrap" Foreground="#FFD4D4"
+                               HorizontalAlignment="Center" TextAlignment="Center"/>
+                    <Button Content="Start"
+                            Command="{Binding StartMakaoCommand}"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Center"
+                            Padding="0,10" FontSize="16" FontWeight="SemiBold"
+                            Background="#D84A4A" Foreground="White"/>
+                </StackPanel>
+            </Border>
+        </UniformGrid>
+    </Grid>
+</UserControl>
