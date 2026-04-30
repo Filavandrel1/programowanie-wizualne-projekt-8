@@ -6,6 +6,7 @@ public partial class WarViewModel : GameViewModelBase
 {
     public override string Title => "Wojna";
     public override string Description => "Klasyczna gra karciana – kto ma wyższą kartę, ten wygrywa rundę.";
+    public override string GameName => "Wojna";
 
     private static readonly string[] Ranks =
         { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
@@ -16,10 +17,15 @@ public partial class WarViewModel : GameViewModelBase
     {
         var p1 = Draw(out var p1Val);
         var p2 = Draw(out var p2Val);
-        var result = p1Val > p2Val ? "Wygrywa Gracz 1!"
-                   : p2Val > p1Val ? "Wygrywa Gracz 2!"
-                   : "Remis – wojna!";
-        Status = $"Gracz 1: {p1}   |   Gracz 2: {p2}\n{result}";
+
+        string outcome;
+        string historyResult;
+        if (p1Val > p2Val) { outcome = "Wygrywa Gracz 1!"; historyResult = "wygrana"; }
+        else if (p2Val > p1Val) { outcome = "Wygrywa Gracz 2!"; historyResult = "przegrana"; }
+        else { outcome = "Remis – wojna!"; historyResult = "remis"; }
+
+        Status = $"Gracz 1: {p1}   |   Gracz 2: {p2}\n{outcome}";
+        RecordResult(historyResult);
     }
 
     private string Draw(out int value)

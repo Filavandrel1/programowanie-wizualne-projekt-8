@@ -1,0 +1,76 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:projekt8plsdzialaj.ViewModels"
+             xmlns:m="using:projekt8plsdzialaj.Models"
+             x:Class="projekt8plsdzialaj.Views.HistoryView"
+             x:DataType="vm:HistoryViewModel">
+    <Grid RowDefinitions="Auto,*,Auto" Margin="24">
+        <StackPanel Grid.Row="0" Spacing="4">
+            <TextBlock Text="📜 Historia rozgrywek" FontSize="28" FontWeight="Bold"/>
+            <TextBlock Text="Najnowsze partie na górze." Opacity="0.7"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Margin="0,16" CornerRadius="12"
+                Background="#1A1A1A" BorderBrush="#333" BorderThickness="1">
+            <Grid>
+                <TextBlock Text="Brak zapisanych rozgrywek. Zagraj kilka partii!"
+                           Foreground="#888" FontStyle="Italic"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"
+                           IsVisible="{Binding IsEmpty}"/>
+
+                <ScrollViewer IsVisible="{Binding !IsEmpty}">
+                    <StackPanel Spacing="0">
+                        <!-- Nagłówek -->
+                        <Grid ColumnDefinitions="160,1.2*,1*,1.4*"
+                              Background="#262626" Margin="0">
+                            <TextBlock Grid.Column="0" Text="Data" Padding="12,8"
+                                       Foreground="#9CC" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="1" Text="Gracz" Padding="12,8"
+                                       Foreground="#9CC" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="2" Text="Gra" Padding="12,8"
+                                       Foreground="#9CC" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="3" Text="Wynik" Padding="12,8"
+                                       Foreground="#9CC" FontWeight="SemiBold"/>
+                        </Grid>
+
+                        <ItemsControl ItemsSource="{Binding Records}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="m:GameRecord">
+                                    <Grid ColumnDefinitions="160,1.2*,1*,1.4*">
+                                        <Border Grid.ColumnSpan="4"
+                                                BorderBrush="#333" BorderThickness="0,0,0,1"/>
+                                        <TextBlock Grid.Column="0"
+                                                   Text="{Binding PlayedAtDisplay}"
+                                                   Padding="12,8"
+                                                   Foreground="#CCC"/>
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding PlayerName}"
+                                                   Padding="12,8"
+                                                   Foreground="White" FontWeight="SemiBold"/>
+                                        <TextBlock Grid.Column="2"
+                                                   Text="{Binding GameName}"
+                                                   Padding="12,8"
+                                                   Foreground="#CCC"/>
+                                        <TextBlock Grid.Column="3"
+                                                   Text="{Binding Result}"
+                                                   Padding="12,8"
+                                                   Foreground="#9FE0BF"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
+            <Button Content="🔄 Odśwież"
+                    Command="{Binding RefreshCommand}"
+                    Padding="20,10" FontSize="14"/>
+            <Button Content="← Powrót do menu"
+                    Command="{Binding BackCommand}"
+                    Padding="20,10" FontSize="14"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
