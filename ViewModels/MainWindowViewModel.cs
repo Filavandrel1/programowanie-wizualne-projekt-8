@@ -1,0 +1,6 @@
+﻿namespace projekt8plsdzialaj.ViewModels;
+
+public partial class MainWindowViewModel : ViewModelBase
+{
+    public string Greeting { get; } = "Welcome to Avalonia!";
+}
