@@ -19,7 +19,17 @@ public class ViewLocator : IDataTemplate
         if (param is null)
             return null;
 
-        // Walk up the inheritance chain so derived game view-models can share a base View.
+        if (param is ViewModels.WarViewModel)
+        {
+            return new Views.WarView();
+        }
+
+        if (param is ViewModels.GameViewModelBase)
+        {
+            return new Views.GameView();
+        }
+
+        // Walk up the inheritance chain so derived view-models can share a base View.
         var t = param.GetType();
         while (t != null && t != typeof(object))
         {

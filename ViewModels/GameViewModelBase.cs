@@ -14,6 +14,18 @@ public abstract partial class GameViewModelBase : ViewModelBase
     [ObservableProperty]
     private string _status = "Naciśnij \"Rozdaj\", aby zacząć.";
 
+    [ObservableProperty]
+    private string _player1Card = string.Empty;
+
+    [ObservableProperty]
+    private string _player2Card = string.Empty;
+
+    [ObservableProperty]
+    private int _player1DeckCount;
+
+    [ObservableProperty]
+    private int _player2DeckCount;
+
     [RelayCommand]
     private void Back() => BackRequested?.Invoke();
 

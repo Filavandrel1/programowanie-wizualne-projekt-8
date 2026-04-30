@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:projekt8plsdzialaj.ViewModels"
+             x:Class="projekt8plsdzialaj.Views.WarView"
+             x:DataType="vm:WarViewModel">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="16" Margin="24">
+        <StackPanel Grid.Row="0" Spacing="4">
+            <TextBlock Text="{Binding Title}" FontSize="28" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Description}" Opacity="0.7"/>
+        </StackPanel>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,20,*">
+            <Border Grid.Column="0" CornerRadius="16" Padding="20" Background="#1A1A1A" BorderBrush="#333" BorderThickness="1">
+                <StackPanel Spacing="14">
+                    <TextBlock Text="{Binding Player1Name}" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
+                    <Border Height="180" CornerRadius="16" Background="#F8F8F8" BorderBrush="#CCC" BorderThickness="1" Padding="16">
+                        <TextBlock Text="{Binding Player1Card}" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Text="{Binding Player1DeckCount, StringFormat=Twoja talia: {0} kart}" Foreground="#D1D5DB"/>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Column="2" CornerRadius="16" Padding="20" Background="#1A1A1A" BorderBrush="#333" BorderThickness="1">
+                <StackPanel Spacing="14">
+                    <TextBlock Text="{Binding Player2Name}" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
+                    <Border Height="180" CornerRadius="16" Background="#F8F8F8" BorderBrush="#CCC" BorderThickness="1" Padding="16">
+                        <TextBlock Text="{Binding Player2Card}" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Text="{Binding Player2DeckCount, StringFormat=Talia komputera: {0} kart}" Foreground="#D1D5DB"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <Border Grid.Row="2" Margin="0,8,0,0" Background="#1A1A1A" CornerRadius="12" Padding="24" BorderBrush="#333" BorderThickness="1">
+            <TextBlock Text="{Binding Status}" Foreground="White" FontSize="18" TextWrapping="Wrap"/>
+        </Border>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="12">
+            <Button Content="🎴 Rozdaj" Command="{Binding DealCommand}" Padding="20,10" FontSize="16" FontWeight="SemiBold"/>
+            <Button Content="← Powrót do menu" Command="{Binding BackCommand}" Padding="20,10" FontSize="16"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -22,20 +22,23 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = projekt8plsdzialaj
-build_property.ProjectDir = /Users/filavandrel/uczelnia/C#/projekt8plsdzialaj/
+build_property.ProjectDir = C:\Users\Windows 10\Desktop\Programowanie\Programowanie Wizualne\Projket8\programowanie-wizualne-projekt-8\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.EffectiveAnalysisLevelStyle = 10.0
 build_property.EnableCodeStyleSeverity = 
 
-[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/App.axaml]
+[C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/GameView.axaml]
+[C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/GameView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/MainWindow.axaml]
+[C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/MenuView.axaml]
+[C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/MenuView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/WarView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
