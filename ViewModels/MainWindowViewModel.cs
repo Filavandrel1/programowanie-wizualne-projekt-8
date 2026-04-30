@@ -16,6 +16,7 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         var menu = new MenuViewModel();
         menu.GameSelected += OpenGame;
+        menu.HistoryRequested += OpenHistory;
         return menu;
     }
 
@@ -24,5 +25,12 @@ public partial class MainWindowViewModel : ViewModelBase
         if (gameVm is GameViewModelBase game)
             game.BackRequested += () => CurrentView = CreateMenu();
         CurrentView = gameVm;
+    }
+
+    private void OpenHistory()
+    {
+        var history = new HistoryViewModel();
+        history.BackRequested += () => CurrentView = CreateMenu();
+        CurrentView = history;
     }
 }

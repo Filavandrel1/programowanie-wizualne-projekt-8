@@ -34,11 +34,17 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/GameView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/MainWindow.axaml]
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/GameView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/HistoryView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/MenuView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/WarView.axaml]
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/MenuView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/SolitaireView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

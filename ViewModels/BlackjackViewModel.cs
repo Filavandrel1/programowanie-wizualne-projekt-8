@@ -8,6 +8,7 @@ public partial class BlackjackViewModel : GameViewModelBase
 {
     public override string Title => "Oczko (Blackjack)";
     public override string Description => "Zbierz jak najwięcej oczek, ale nie przekrocz 21.";
+    public override string GameName => "Oczko";
 
     private readonly Random _rng = new();
 
@@ -22,9 +23,13 @@ public partial class BlackjackViewModel : GameViewModelBase
             sum += card;
         }
 
-        var verdict = sum == 21 ? "Blackjack!"
-                    : sum > 21 ? "Przegrana – fura!"
-                    : "Stoisz na " + sum + ".";
+        string verdict;
+        string historyResult;
+        if (sum == 21) { verdict = "Blackjack!"; historyResult = "wygrana"; }
+        else if (sum > 21) { verdict = "Przegrana – fura!"; historyResult = "przegrana"; }
+        else { verdict = "Stoisz na " + sum + "."; historyResult = "wygrana (" + sum + ")"; }
+
         Status = $"Karty: {string.Join(" + ", hand)} = {sum}\n{verdict}";
+        RecordResult(historyResult);
     }
 }

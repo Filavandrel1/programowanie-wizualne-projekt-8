@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:projekt8plsdzialaj.ViewModels"
+             x:Class="projekt8plsdzialaj.Views.SolitaireView"
+             x:DataType="vm:SolitaireViewModel">
+    <Grid RowDefinitions="Auto,*,Auto" Margin="24">
+        <StackPanel Grid.Row="0" Spacing="4">
+            <TextBlock Text="{Binding Title}" FontSize="28" FontWeight="Bold"/>
+            <TextBlock Text="{Binding Description}" Opacity="0.7"/>
+            <TextBlock Opacity="0.7">
+                <Run Text="Gracz:"/>
+                <Run Text="{Binding PlayerName}" FontWeight="SemiBold"/>
+            </TextBlock>
+        </StackPanel>
+
+        <Border Grid.Row="1" Margin="0,16" CornerRadius="12" Padding="24"
+                Background="#1A1A1A" BorderBrush="#333" BorderThickness="1">
+            <StackPanel Spacing="16" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding Status}"
+                           Foreground="White" FontSize="18"
+                           TextWrapping="Wrap" TextAlignment="Center"/>
+                <TextBlock Text="{Binding ElapsedDisplay}"
+                           Foreground="#1FAE6B" FontSize="42" FontWeight="Bold"
+                           HorizontalAlignment="Center"
+                           IsVisible="{Binding IsRunning}"/>
+            </StackPanel>
+        </Border>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
+            <Button Content="🎴 Rozdaj"
+                    Command="{Binding DealCommand}"
+                    Padding="20,10" FontSize="16" FontWeight="SemiBold"/>
+            <Button Content="✅ Ułożone!"
+                    Command="{Binding SolveCommand}"
+                    Padding="20,10" FontSize="16" FontWeight="SemiBold"
+                    Background="#1FAE6B" Foreground="White"/>
+            <Button Content="🏳️ Poddaję się"
+                    Command="{Binding SurrenderCommand}"
+                    Padding="20,10" FontSize="16"/>
+            <Button Content="← Powrót do menu"
+                    Command="{Binding BackCommand}"
+                    Padding="20,10" FontSize="16"/>
+        </StackPanel>
+    </Grid>
+</UserControl>
