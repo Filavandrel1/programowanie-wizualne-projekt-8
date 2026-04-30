@@ -1604,24 +1604,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Windows 10\\.nuget\\packages\\": {}
+    "/Users/filavandrel/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Windows 10\\Desktop\\Programowanie\\Programowanie Wizualne\\Projket8\\programowanie-wizualne-projekt-8\\projekt8plsdzialaj.csproj",
+      "projectUniqueName": "/Users/filavandrel/uczelnia/C#/projekt8plsdzialaj/projekt8plsdzialaj.csproj",
       "projectName": "projekt8plsdzialaj",
-      "projectPath": "C:\\Users\\Windows 10\\Desktop\\Programowanie\\Programowanie Wizualne\\Projket8\\programowanie-wizualne-projekt-8\\projekt8plsdzialaj.csproj",
-      "packagesPath": "C:\\Users\\Windows 10\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Windows 10\\Desktop\\Programowanie\\Programowanie Wizualne\\Projket8\\programowanie-wizualne-projekt-8\\obj\\",
+      "projectPath": "/Users/filavandrel/uczelnia/C#/projekt8plsdzialaj/projekt8plsdzialaj.csproj",
+      "packagesPath": "/Users/filavandrel/.nuget/packages/",
+      "outputPath": "/Users/filavandrel/uczelnia/C#/projekt8plsdzialaj/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Windows 10\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/filavandrel/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
+        "/opt/homebrew/Cellar/dotnet/10.0.103/libexec/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1687,7 +1688,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/10.0.103/libexec/sdk/10.0.103/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

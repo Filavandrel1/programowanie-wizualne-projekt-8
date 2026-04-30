@@ -1,45 +1,269 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:projekt8plsdzialaj.ViewModels"
+             xmlns:m="using:projekt8plsdzialaj.Models"
              x:Class="projekt8plsdzialaj.Views.SolitaireView"
-             x:DataType="vm:SolitaireViewModel">
-    <Grid RowDefinitions="Auto,*,Auto" Margin="24">
-        <StackPanel Grid.Row="0" Spacing="4">
-            <TextBlock Text="{Binding Title}" FontSize="28" FontWeight="Bold"/>
-            <TextBlock Text="{Binding Description}" Opacity="0.7"/>
-            <TextBlock Opacity="0.7">
+             x:DataType="vm:SolitaireViewModel"
+             x:Name="Root">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="TableBg" Color="#0E5C3A"/>
+        <SolidColorBrush x:Key="PileBg" Color="#0A3F28"/>
+        <SolidColorBrush x:Key="CardWhite" Color="#FAFAFA"/>
+        <SolidColorBrush x:Key="CardBack" Color="#244A8C"/>
+        <SolidColorBrush x:Key="CardBackBorder" Color="#3666C8"/>
+        <SolidColorBrush x:Key="RedBrush" Color="#C0202A"/>
+        <SolidColorBrush x:Key="BlackBrush" Color="#101010"/>
+        <SolidColorBrush x:Key="SelectionBrush" Color="#FFD24A"/>
+    </UserControl.Resources>
+
+    <UserControl.Styles>
+        <Style Selector="Button.flat">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="CornerRadius" Value="6"/>
+        </Style>
+        <Style Selector="Button.flat:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#22FFFFFF"/>
+        </Style>
+    </UserControl.Styles>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="16" Background="{StaticResource TableBg}">
+        <!-- Nagłówek -->
+        <StackPanel Grid.Row="0" Spacing="2">
+            <TextBlock Text="🂡 Pasjans Klondike" FontSize="22" FontWeight="Bold" Foreground="White"/>
+            <TextBlock Foreground="#C7F0DA" FontSize="12">
                 <Run Text="Gracz:"/>
                 <Run Text="{Binding PlayerName}" FontWeight="SemiBold"/>
+                <Run Text="   •   Czas:"/>
+                <Run Text="{Binding ElapsedDisplay}" FontWeight="SemiBold"/>
             </TextBlock>
+            <TextBlock Text="{Binding Status}" Foreground="White" FontSize="12" TextWrapping="Wrap"/>
         </StackPanel>
 
-        <Border Grid.Row="1" Margin="0,16" CornerRadius="12" Padding="24"
-                Background="#1A1A1A" BorderBrush="#333" BorderThickness="1">
-            <StackPanel Spacing="16" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="{Binding Status}"
-                           Foreground="White" FontSize="18"
-                           TextWrapping="Wrap" TextAlignment="Center"/>
-                <TextBlock Text="{Binding ElapsedDisplay}"
-                           Foreground="#1FAE6B" FontSize="42" FontWeight="Bold"
-                           HorizontalAlignment="Center"
-                           IsVisible="{Binding IsRunning}"/>
-            </StackPanel>
-        </Border>
+        <!-- Górny pas: stos rezerwowy, waste, foundations -->
+        <Grid Grid.Row="1" Margin="0,12,0,12" ColumnDefinitions="Auto,12,Auto,*,Auto,Auto,Auto,Auto">
+            <!-- Stos rezerwowy (zakryty) -->
+            <Button Grid.Column="0" Classes="flat"
+                    Command="{Binding ClickStockCommand}"
+                    Width="80" Height="110">
+                <Border Background="{StaticResource CardBack}"
+                        BorderBrush="{StaticResource CardBackBorder}" BorderThickness="2"
+                        CornerRadius="6" IsVisible="{Binding StockCount}">
+                    <TextBlock Text="🂠" FontSize="36" Foreground="#9DBFFF"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Border>
+            </Button>
+            <!-- Pusty stos rezerwowy: kółeczko recyklingu -->
+            <Border Grid.Column="0" Width="80" Height="110"
+                    Background="{StaticResource PileBg}"
+                    BorderBrush="#1FAE6B" BorderThickness="1"
+                    CornerRadius="6" IsHitTestVisible="False">
+                <TextBlock Text="↻" FontSize="36" Foreground="#1FAE6B"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Border.IsVisible>
+                    <Binding Path="StockCount" Converter="{x:Static vm:ZeroToTrueConverter.Instance}"/>
+                </Border.IsVisible>
+            </Border>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center">
+            <!-- Waste (odkryta wierzchnia karta) -->
+            <Grid Grid.Column="2" Width="80" Height="110">
+                <Border Background="{StaticResource PileBg}"
+                        BorderBrush="#1FAE6B" BorderThickness="1"
+                        CornerRadius="6"/>
+                <Button Classes="flat"
+                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+                        Command="{Binding ClickCardCommand}"
+                        CommandParameter="{Binding WasteTop}"
+                        IsVisible="{Binding WasteTop, Converter={x:Static vm:NotNullConverter.Instance}}">
+                    <Grid Width="80" Height="110">
+                        <Border Background="{StaticResource CardWhite}"
+                                BorderThickness="2"
+                                CornerRadius="6">
+                            <Border.BorderBrush>
+                                <Binding Path="WasteTop.IsSelected"
+                                         Converter="{x:Static vm:SelectionBorderConverter.Instance}"/>
+                            </Border.BorderBrush>
+                            <Grid>
+                                <TextBlock Text="{Binding WasteTop.Rank}" FontSize="16" FontWeight="Bold"
+                                           Margin="6,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                    <TextBlock.Foreground>
+                                        <Binding Path="WasteTop.IsRed"
+                                                 Converter="{x:Static vm:RedBlackConverter.Instance}"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                <TextBlock Text="{Binding WasteTop.SuitSymbol}" FontSize="32"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock.Foreground>
+                                        <Binding Path="WasteTop.IsRed"
+                                                 Converter="{x:Static vm:RedBlackConverter.Instance}"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                <TextBlock Text="{Binding WasteTop.Rank}" FontSize="16" FontWeight="Bold"
+                                           Margin="0,0,6,4"
+                                           HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                    <TextBlock.Foreground>
+                                        <Binding Path="WasteTop.IsRed"
+                                                 Converter="{x:Static vm:RedBlackConverter.Instance}"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Button>
+            </Grid>
+
+            <!-- Foundations -->
+            <ItemsControl Grid.Column="4" Grid.ColumnSpan="4" ItemsSource="{Binding Foundations}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" Spacing="8"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate DataType="m:FoundationPile">
+                        <Button Classes="flat"
+                                Command="{Binding #Root.((vm:SolitaireViewModel)DataContext).ClickFoundationCommand}"
+                                CommandParameter="{Binding}">
+                            <Grid Width="80" Height="110">
+                                <Border Background="{StaticResource PileBg}"
+                                        BorderBrush="#1FAE6B" BorderThickness="1"
+                                        CornerRadius="6"/>
+                                <TextBlock Text="{Binding SuitSymbol}" FontSize="36" Opacity="0.4"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center">
+                                    <TextBlock.Foreground>
+                                        <Binding Path="IsRed"
+                                                 Converter="{x:Static vm:RedBlackConverter.Instance}"/>
+                                    </TextBlock.Foreground>
+                                </TextBlock>
+                                <Border Background="{StaticResource CardWhite}"
+                                        BorderBrush="{StaticResource BlackBrush}" BorderThickness="1"
+                                        CornerRadius="6"
+                                        IsVisible="{Binding TopCard, Converter={x:Static vm:NotNullConverter.Instance}}">
+                                    <Grid>
+                                        <TextBlock Text="{Binding TopCard.Rank}" FontSize="16" FontWeight="Bold"
+                                                   Margin="6,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <TextBlock.Foreground>
+                                                <Binding Path="IsRed"
+                                                         Converter="{x:Static vm:RedBlackConverter.Instance}"/>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding TopCard.SuitSymbol}" FontSize="32"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock.Foreground>
+                                                <Binding Path="IsRed"
+                                                         Converter="{x:Static vm:RedBlackConverter.Instance}"/>
+                                            </TextBlock.Foreground>
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
+
+        <!-- Kolumny robocze -->
+        <ItemsControl Grid.Row="2" ItemsSource="{Binding Tableaus}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="7" Rows="1"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="m:TableauPile">
+                    <Grid Margin="4" MinHeight="380">
+                        <!-- Tło/click empty -->
+                        <Button Classes="flat"
+                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                Command="{Binding #Root.((vm:SolitaireViewModel)DataContext).ClickPileCommand}"
+                                CommandParameter="{Binding}">
+                            <Border Background="{StaticResource PileBg}"
+                                    BorderBrush="#1FAE6B" BorderThickness="1"
+                                    CornerRadius="6"
+                                    HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        </Button>
+                        <!-- Stos kart -->
+                        <ItemsControl ItemsSource="{Binding Cards}" VerticalAlignment="Top">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="m:SolitaireCard">
+                                    <Button Classes="flat"
+                                            Margin="{Binding StackMargin}"
+                                            Command="{Binding #Root.((vm:SolitaireViewModel)DataContext).ClickCardCommand}"
+                                            CommandParameter="{Binding}"
+                                            HorizontalAlignment="Center">
+                                        <Grid Width="80" Height="110">
+                                            <!-- Karta zakryta -->
+                                            <Border Background="{StaticResource CardBack}"
+                                                    BorderBrush="{StaticResource CardBackBorder}" BorderThickness="2"
+                                                    CornerRadius="6"
+                                                    IsVisible="{Binding !IsFaceUp}">
+                                                <TextBlock Text="🂠" FontSize="32" Foreground="#9DBFFF"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Border>
+                                            <!-- Karta odkryta -->
+                                            <Border Background="{StaticResource CardWhite}"
+                                                    BorderThickness="2"
+                                                    CornerRadius="6"
+                                                    IsVisible="{Binding IsFaceUp}">
+                                                <Border.BorderBrush>
+                                                    <Binding Path="IsSelected"
+                                                             Converter="{x:Static vm:SelectionBorderConverter.Instance}"/>
+                                                </Border.BorderBrush>
+                                                <Grid>
+                                                    <TextBlock Text="{Binding Rank}" FontSize="16" FontWeight="Bold"
+                                                               Margin="6,4,0,0"
+                                                               HorizontalAlignment="Left" VerticalAlignment="Top">
+                                                        <TextBlock.Foreground>
+                                                            <Binding Path="IsRed"
+                                                                     Converter="{x:Static vm:RedBlackConverter.Instance}"/>
+                                                        </TextBlock.Foreground>
+                                                    </TextBlock>
+                                                    <TextBlock Text="{Binding SuitSymbol}" FontSize="32"
+                                                               HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <TextBlock.Foreground>
+                                                            <Binding Path="IsRed"
+                                                                     Converter="{x:Static vm:RedBlackConverter.Instance}"/>
+                                                        </TextBlock.Foreground>
+                                                    </TextBlock>
+                                                    <TextBlock Text="{Binding Rank}" FontSize="16" FontWeight="Bold"
+                                                               Margin="0,0,6,4"
+                                                               HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                                        <TextBlock.Foreground>
+                                                            <Binding Path="IsRed"
+                                                                     Converter="{x:Static vm:RedBlackConverter.Instance}"/>
+                                                        </TextBlock.Foreground>
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </Button>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- Stopka -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="12" HorizontalAlignment="Center" Margin="0,12,0,0">
             <Button Content="🎴 Rozdaj"
                     Command="{Binding DealCommand}"
-                    Padding="20,10" FontSize="16" FontWeight="SemiBold"/>
-            <Button Content="✅ Ułożone!"
-                    Command="{Binding SolveCommand}"
-                    Padding="20,10" FontSize="16" FontWeight="SemiBold"
-                    Background="#1FAE6B" Foreground="White"/>
+                    Padding="20,10" FontSize="14" FontWeight="SemiBold"/>
             <Button Content="🏳️ Poddaję się"
                     Command="{Binding SurrenderCommand}"
-                    Padding="20,10" FontSize="16"/>
+                    Padding="20,10" FontSize="14"/>
             <Button Content="← Powrót do menu"
                     Command="{Binding BackCommand}"
-                    Padding="20,10" FontSize="16"/>
+                    Padding="20,10" FontSize="14"/>
         </StackPanel>
     </Grid>
 </UserControl>

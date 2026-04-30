@@ -8,8 +8,9 @@ public partial class WarViewModel : GameViewModelBase
 {
     public override string Title => "Wojna";
     public override string Description => "Rozgrywka przeciwko komputerowi — wyższa karta wygrywa rundę.";
+    public override string GameName => "Wojna";
 
-    private const string PlayerName = "Ty";
+    private const string HumanLabel = "Ty";
     private const string ComputerName = "Komputer";
 
     private static readonly string[] Ranks =
@@ -31,7 +32,7 @@ public partial class WarViewModel : GameViewModelBase
     [ObservableProperty]
     private int _player2DeckCount;
 
-    public string Player1Name => PlayerName;
+    public string Player1Name => HumanLabel;
     public string Player2Name => ComputerName;
 
     public WarViewModel()
@@ -119,9 +120,11 @@ public partial class WarViewModel : GameViewModelBase
 
         if (_player1Deck.Count == 0 || _player2Deck.Count == 0)
         {
-            Status += _player1Deck.Count == 0
-                ? "\nKoniec gry — wygrał Komputer!"
-                : "\nKoniec gry — wygrałeś!";
+            bool humanWon = _player2Deck.Count == 0;
+            Status += humanWon
+                ? "\nKoniec gry — wygrałeś!"
+                : "\nKoniec gry — wygrał Komputer!";
+            RecordResult(humanWon ? "wygrana" : "przegrana");
         }
     }
 
