@@ -9,8 +9,8 @@ public partial class WarViewModel : GameViewModelBase
     public override string Title => "Wojna";
     public override string Description => "Rozgrywka przeciwko komputerowi — wyższa karta wygrywa rundę.";
 
-    private const string PlayerName = "Ty";
-    private const string ComputerName = "Komputer";
+    private const string PlayerLabel = "Ty";
+    private const string ComputerLabel = "Komputer";
 
     private static readonly string[] Ranks =
         { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
@@ -31,8 +31,10 @@ public partial class WarViewModel : GameViewModelBase
     [ObservableProperty]
     private int _player2DeckCount;
 
-    public string Player1Name => PlayerName;
-    public string Player2Name => ComputerName;
+    public string Player1Name => PlayerLabel;
+    public string Player2Name => ComputerLabel;
+
+    public override string GameName => "Wojna";
 
     public WarViewModel()
     {
@@ -190,7 +192,7 @@ public partial class WarViewModel : GameViewModelBase
         var p2Value = GetRankValue(p2Face);
 
         summary = $"Wojna! Ty kładziesz {faceDownCount1} zakrytą kartę{(faceDownCount1 == 1 ? "" : "y")}, " +
-                  $"Komputer kładzie {faceDownCount2} zakrytą kartę{(faceDownCount2 == 1 ? "" : "y")}." +
+                  $"Komputer kładzie {faceDownCount2} zakrytą karte{(faceDownCount2 == 1 ? "" : "y")}." +
                   $" Ty: {p1Face}   |   Komputer: {p2Face}";
 
         if (p1Value > p2Value)
