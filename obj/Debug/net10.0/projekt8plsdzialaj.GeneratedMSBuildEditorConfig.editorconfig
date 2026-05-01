@@ -34,6 +34,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/GameView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/HiLoView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/HistoryView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

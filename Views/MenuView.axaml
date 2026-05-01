@@ -79,6 +79,20 @@
                     Background="#333" Foreground="White"/>
         </Grid>
 
+        <!-- Ukryta gra: czerwony przycisk z wykrzyknikiem -->
+        <Button Command="{Binding StartHiLoCommand}"
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                Margin="0,18,18,0"
+                Width="48" Height="48"
+                CornerRadius="24"
+                Background="#C0202A" Foreground="White"
+                BorderBrush="#FF5A5A" BorderThickness="2"
+                Padding="0"
+                FontSize="24" FontWeight="Bold"
+                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                ToolTip.Tip="...?"
+                Content="!"/>
+
         <Border IsVisible="{Binding IsLoginVisible}" Background="#CC000000">
             <Border HorizontalAlignment="Center" VerticalAlignment="Center"
                     Background="#1A1A1A" BorderBrush="#444" BorderThickness="1"

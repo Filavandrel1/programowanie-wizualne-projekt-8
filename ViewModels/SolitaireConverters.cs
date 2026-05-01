@@ -52,3 +52,12 @@ public sealed class ZeroToTrueConverter : IValueConverter
     public object Convert(object? value, Type t, object? p, CultureInfo c) => value is int i && i == 0;
     public object ConvertBack(object? value, Type t, object? p, CultureInfo c) => throw new NotSupportedException();
 }
+
+/// <summary>Color → IBrush (SolidColorBrush).</summary>
+public sealed class ColorToBrushConverter : IValueConverter
+{
+    public static readonly ColorToBrushConverter Instance = new();
+    public object Convert(object? value, Type t, object? p, CultureInfo c)
+        => value is Color col ? new SolidColorBrush(col) : (object)Brushes.Black;
+    public object ConvertBack(object? value, Type t, object? p, CultureInfo c) => throw new NotSupportedException();
+}

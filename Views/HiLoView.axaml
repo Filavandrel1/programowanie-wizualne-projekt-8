@@ -1,0 +1,322 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:projekt8plsdzialaj.ViewModels"
+             x:Class="projekt8plsdzialaj.Views.HiLoView"
+             x:DataType="vm:HiLoViewModel">
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="DangerBg" Color="#1A0606"/>
+        <SolidColorBrush x:Key="DangerAccent" Color="#C0202A"/>
+        <SolidColorBrush x:Key="CardWhite" Color="#FAFAFA"/>
+        <SolidColorBrush x:Key="BlackBrush" Color="#101010"/>
+    </UserControl.Resources>
+
+    <Grid ClipToBounds="True">
+        <Grid.Background>
+            <SolidColorBrush Color="{Binding BackgroundColor}"/>
+        </Grid.Background>
+        <!-- Cały ekran chwieje się i drga (M1+) -->
+        <Grid>
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="{Binding ScreenSwayAngle}"/>
+                    <TranslateTransform X="{Binding ScreenOffsetX}" Y="{Binding ScreenOffsetY}"/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+
+            <Grid RowDefinitions="Auto,*,Auto" Margin="24">
+                <!-- Nagłówek -->
+                <StackPanel Grid.Row="0" Spacing="6" HorizontalAlignment="Center">
+                    <TextBlock Text="!? Diabelska Talia ?!" FontSize="26" FontWeight="Bold"
+                               Foreground="#FF5A5A" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="14" Foreground="#E0CCCC" HorizontalAlignment="Center">
+                        <Run Text="Wynik:"/>
+                        <Run Text="{Binding Score}" FontWeight="Bold"/>
+                        <Run Text="    Pomyłki:"/>
+                        <Run Text="{Binding MistakeCount}" FontWeight="Bold" Foreground="#FF8585"/>
+                        <Run Text="/10"/>
+                    </TextBlock>
+                    <TextBlock Text="{Binding Status}" Foreground="#FFD7D7" FontSize="13"
+                               HorizontalAlignment="Center" TextWrapping="Wrap"/>
+                </StackPanel>
+
+                <!-- Karta(y) na środku -->
+                <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                    <!-- KARTA 1 (lewa, widoczna od M1) -->
+                    <Border Width="180" Height="260"
+                            Background="{StaticResource CardWhite}"
+                            BorderBrush="{StaticResource BlackBrush}" BorderThickness="3" CornerRadius="12"
+                            BoxShadow="0 6 18 0 #80000000"
+                            IsVisible="{Binding ShowThreeCards}">
+                        <Border.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform X="-140"/>
+                                <RotateTransform Angle="{Binding Card1SwayAngle}"/>
+                                <TranslateTransform X="{Binding Card1OffsetX}" Y="{Binding Card1OffsetY}"/>
+                            </TransformGroup>
+                        </Border.RenderTransform>
+                        <Grid>
+                            <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                                       Margin="14,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                       Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}">
+                                <TextBlock.Effect>
+                                    <BlurEffect Radius="{Binding RankBlur}"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock Text="{Binding DisplayedSuit}" FontSize="110"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                            <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                                       Margin="0,0,14,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                       Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}">
+                                <TextBlock.Effect>
+                                    <BlurEffect Radius="{Binding RankBlur}"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+
+                    <!-- KARTA 2 (środkowa, ZAWSZE widoczna) -->
+                    <Border Width="180" Height="260"
+                            Background="{StaticResource CardWhite}"
+                            BorderBrush="{StaticResource BlackBrush}" BorderThickness="3" CornerRadius="12"
+                            BoxShadow="0 6 18 0 #80000000">
+                        <Border.RenderTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="{Binding Card2SwayAngle}"/>
+                                <TranslateTransform X="{Binding Card2OffsetX}" Y="{Binding Card2OffsetY}"/>
+                            </TransformGroup>
+                        </Border.RenderTransform>
+                        <Grid>
+                            <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                                       Margin="14,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                       Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}">
+                                <TextBlock.Effect>
+                                    <BlurEffect Radius="{Binding RankBlur}"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock Text="{Binding DisplayedSuit}" FontSize="110"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                            <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                                       Margin="0,0,14,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                       Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}">
+                                <TextBlock.Effect>
+                                    <BlurEffect Radius="{Binding RankBlur}"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+
+                    <!-- KARTA 3 (prawa, widoczna od M1) -->
+                    <Border Width="180" Height="260"
+                            Background="{StaticResource CardWhite}"
+                            BorderBrush="{StaticResource BlackBrush}" BorderThickness="3" CornerRadius="12"
+                            BoxShadow="0 6 18 0 #80000000"
+                            IsVisible="{Binding ShowThreeCards}">
+                        <Border.RenderTransform>
+                            <TransformGroup>
+                                <TranslateTransform X="140"/>
+                                <RotateTransform Angle="{Binding Card3SwayAngle}"/>
+                                <TranslateTransform X="{Binding Card3OffsetX}" Y="{Binding Card3OffsetY}"/>
+                            </TransformGroup>
+                        </Border.RenderTransform>
+                        <Grid>
+                            <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                                       Margin="14,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                                       Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}">
+                                <TextBlock.Effect>
+                                    <BlurEffect Radius="{Binding RankBlur}"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                            <TextBlock Text="{Binding DisplayedSuit}" FontSize="110"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                            <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                                       Margin="0,0,14,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                       Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}">
+                                <TextBlock.Effect>
+                                    <BlurEffect Radius="{Binding RankBlur}"/>
+                                </TextBlock.Effect>
+                            </TextBlock>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- Stopka: przyciski -->
+                <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="14"
+                            HorizontalAlignment="Center" Margin="0,16,0,0">
+                    <Button Content="⬇️ Mniejsza"
+                            Command="{Binding GuessLowerCommand}"
+                            IsEnabled="{Binding !IsGameOver}"
+                            Padding="22,12" FontSize="16" FontWeight="SemiBold"
+                            Background="#3666C8" Foreground="White"/>
+                    <Button Content="⬆️ Większa"
+                            Command="{Binding GuessHigherCommand}"
+                            IsEnabled="{Binding !IsGameOver}"
+                            Padding="22,12" FontSize="16" FontWeight="SemiBold"
+                            Background="#1FAE6B" Foreground="White"/>
+                    <Button Content="🔄 Restart"
+                            Command="{Binding RestartCommand}"
+                            Padding="18,12" FontSize="14"/>
+                    <Button Content="← Powrót"
+                            Command="{Binding BackCommand}"
+                            Padding="18,12" FontSize="14"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <!-- M8: dodatkowe karty rozsiane po 4 rogach ekranu -->
+        <Grid IsVisible="{Binding M8}" IsHitTestVisible="False"
+              HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border Width="180" Height="260"
+                    Background="{StaticResource CardWhite}"
+                    BorderBrush="{StaticResource BlackBrush}" BorderThickness="3" CornerRadius="12"
+                    BoxShadow="0 6 18 0 #80000000">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="{Binding ExtraCard1SwayAngle}"/>
+                        <TranslateTransform X="{Binding ExtraCard1OffsetX}" Y="{Binding ExtraCard1OffsetY}"/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <Grid>
+                    <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                               Margin="14,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                    <TextBlock Text="{Binding DisplayedSuit}" FontSize="110"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                    <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                               Margin="0,0,14,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                </Grid>
+            </Border>
+            <Border Width="180" Height="260"
+                    Background="{StaticResource CardWhite}"
+                    BorderBrush="{StaticResource BlackBrush}" BorderThickness="3" CornerRadius="12"
+                    BoxShadow="0 6 18 0 #80000000">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="{Binding ExtraCard2SwayAngle}"/>
+                        <TranslateTransform X="{Binding ExtraCard2OffsetX}" Y="{Binding ExtraCard2OffsetY}"/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <Grid>
+                    <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                               Margin="14,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                    <TextBlock Text="{Binding DisplayedSuit}" FontSize="110"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                    <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                               Margin="0,0,14,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                </Grid>
+            </Border>
+            <Border Width="180" Height="260"
+                    Background="{StaticResource CardWhite}"
+                    BorderBrush="{StaticResource BlackBrush}" BorderThickness="3" CornerRadius="12"
+                    BoxShadow="0 6 18 0 #80000000">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="{Binding ExtraCard3SwayAngle}"/>
+                        <TranslateTransform X="{Binding ExtraCard3OffsetX}" Y="{Binding ExtraCard3OffsetY}"/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <Grid>
+                    <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                               Margin="14,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                    <TextBlock Text="{Binding DisplayedSuit}" FontSize="110"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                    <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                               Margin="0,0,14,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                </Grid>
+            </Border>
+            <Border Width="180" Height="260"
+                    Background="{StaticResource CardWhite}"
+                    BorderBrush="{StaticResource BlackBrush}" BorderThickness="3" CornerRadius="12"
+                    BoxShadow="0 6 18 0 #80000000">
+                <Border.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="{Binding ExtraCard4SwayAngle}"/>
+                        <TranslateTransform X="{Binding ExtraCard4OffsetX}" Y="{Binding ExtraCard4OffsetY}"/>
+                    </TransformGroup>
+                </Border.RenderTransform>
+                <Grid>
+                    <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                               Margin="14,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                    <TextBlock Text="{Binding DisplayedSuit}" FontSize="110"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                    <TextBlock Text="{Binding DisplayedRank}" FontSize="36" FontWeight="Bold"
+                               Margin="0,0,14,10" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                               Foreground="{Binding DisplayedColor, Converter={x:Static vm:ColorToBrushConverter.Instance}}"/>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- M7: poruszające się czarne plamy -->
+        <Grid IsVisible="{Binding M7}" IsHitTestVisible="False">
+            <Grid.Effect>
+                <BlurEffect Radius="22"/>
+            </Grid.Effect>
+            <Ellipse Width="260" Height="200" Fill="Black"
+                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                     Margin="{Binding Spot1Margin}"/>
+            <Ellipse Width="220" Height="260" Fill="Black"
+                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                     Margin="{Binding Spot2Margin}"/>
+            <Ellipse Width="320" Height="200" Fill="Black"
+                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                     Margin="{Binding Spot3Margin}"/>
+            <Ellipse Width="240" Height="180" Fill="Black"
+                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                     Margin="{Binding Spot4Margin}"/>
+            <Ellipse Width="280" Height="220" Fill="Black"
+                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                     Margin="{Binding Spot5Margin}"/>
+            <!-- Małe ostrzejsze "muszki" w środku każdej plamy -->
+            <Ellipse Width="60" Height="40" Fill="Black"
+                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                     Margin="{Binding Spot1Margin}"/>
+            <Ellipse Width="50" Height="60" Fill="Black"
+                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                     Margin="{Binding Spot2Margin}"/>
+            <Ellipse Width="80" Height="50" Fill="Black"
+                     HorizontalAlignment="Left" VerticalAlignment="Top"
+                     Margin="{Binding Spot3Margin}"/>
+        </Grid>
+
+        <!-- M9: cały ekran czarny z LOSOWYMI przerwami -->
+        <Border Background="Black"
+                Opacity="{Binding BlackoutOpacity}"
+                IsHitTestVisible="False"/>
+
+        <!-- Zasłonka: koniec gry -->
+        <Border IsVisible="{Binding IsGameOver}" Background="#CC000000">
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Background="#1A1A1A" BorderBrush="{StaticResource DangerAccent}" BorderThickness="2"
+                    CornerRadius="12" Padding="28" MinWidth="320">
+                <StackPanel Spacing="12">
+                    <TextBlock Text="💀 Koniec gry 💀" FontSize="22" FontWeight="Bold"
+                               Foreground="#FF5A5A" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding ResultText}" Foreground="White" FontSize="14"
+                               HorizontalAlignment="Center" TextAlignment="Center"/>
+                    <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                        <Button Content="Spróbuj jeszcze raz"
+                                Command="{Binding RestartCommand}"
+                                Padding="16,10" FontWeight="SemiBold"
+                                Background="#1FAE6B" Foreground="White"/>
+                        <Button Content="Powrót do menu"
+                                Command="{Binding BackCommand}"
+                                Padding="16,10"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+</UserControl>
