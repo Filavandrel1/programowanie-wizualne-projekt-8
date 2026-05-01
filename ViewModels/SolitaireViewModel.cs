@@ -34,6 +34,7 @@ public partial class SolitaireViewModel : GameViewModelBase
     [ObservableProperty] private int _stockCount;
     [ObservableProperty] private SolitaireCard? _wasteTop;
     [ObservableProperty] private bool _isDealt;
+    [ObservableProperty] private bool _isGameWon;
 
     public SolitaireViewModel()
     {
@@ -88,6 +89,7 @@ public partial class SolitaireViewModel : GameViewModelBase
         Status = "Powodzenia! Czerwone na czarne, malejąco. As idzie na stos końcowy.";
         SolveCommand.NotifyCanExecuteChanged();
         GiveUpCommand.NotifyCanExecuteChanged();
+        IsGameWon = false;
     }
 
     private static List<SolitaireCard> BuildDeck()
@@ -371,6 +373,7 @@ public partial class SolitaireViewModel : GameViewModelBase
             ElapsedDisplay = FormatTime(_stopwatch.Elapsed);
             Status = $"🎉 Brawo! Ułożyłeś pasjansa w czasie {ElapsedDisplay}.";
             RecordResult($"ułożono w {ElapsedDisplay}");
+            IsGameWon = true;
             SolveCommand.NotifyCanExecuteChanged();
             GiveUpCommand.NotifyCanExecuteChanged();
         }

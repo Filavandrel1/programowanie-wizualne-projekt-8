@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Avalonia.Threading;
 
 namespace projekt8plsdzialaj.ViewModels;
 
@@ -21,6 +22,9 @@ public partial class BlackjackViewModel : GameViewModelBase
 
     private readonly Random _rng = new();
     private readonly List<string> _deck = new();
+    // --- Confetti emitter state ---
+    public ObservableCollection<Confetto> Confetti { get; } = new();
+    private DispatcherTimer? _confettiTimer;
 
     public ObservableCollection<string> PlayerHand { get; } = new();
     public ObservableCollection<string> DealerHand { get; } = new();
@@ -38,12 +42,22 @@ public partial class BlackjackViewModel : GameViewModelBase
     /// <summary>Suma oczek z odkrytych kart krupiera — pokazujemy ja w UI.</summary>
     [ObservableProperty] private int _dealerVisibleScore;
     [ObservableProperty] private bool _isHoleRevealed;
+    // Flaga, gdy gracz wygrał rundę — do wyświetlania overlayu zwycięstwa.
+    [ObservableProperty] private bool _isPlayerWinner;
     [ObservableProperty] private bool _isRoundActive;
     [ObservableProperty] private bool _isRoundOver;
 
     public BlackjackViewModel()
     {
         Status = "Nacisnij \"Rozdaj\", aby rozpoczac runde.";
+    }
+
+    partial void OnIsPlayerWinnerChanged(bool value)
+    {
+        if (value)
+            StartConfetti();
+        else
+            StopConfetti();
     }
 
     protected override void DealCore()
@@ -60,7 +74,8 @@ public partial class BlackjackViewModel : GameViewModelBase
         IsHoleRevealed = false;
         RebuildDealerVisible();
         RecalculateScores();
-        IsRoundOver = false;
+    IsRoundOver = false;
+    IsPlayerWinner = false;
         IsRoundActive = true;
 
         if (PlayerScore == Target)
@@ -86,6 +101,7 @@ public partial class BlackjackViewModel : GameViewModelBase
         {
             IsRoundActive = false;
             IsRoundOver = true;
+            IsPlayerWinner = false;
             Status = $"Fura! Przekroczyles 21 ({PlayerScore}). Przegrywasz.";
             RecordResult($"przegrana ({PlayerScore})");
             NotifyCommandsChanged();
@@ -145,21 +161,25 @@ public partial class BlackjackViewModel : GameViewModelBase
         {
             verdict = $"Krupier ma fure ({DealerScore}). Wygrywasz!";
             history = $"wygrana ({PlayerScore} vs fura)";
+            IsPlayerWinner = true;
         }
         else if (PlayerScore > DealerScore)
         {
             verdict = $"Wygrywasz! {PlayerScore} vs {DealerScore}.";
             history = $"wygrana ({PlayerScore} vs {DealerScore})";
+            IsPlayerWinner = true;
         }
         else if (PlayerScore < DealerScore)
         {
             verdict = $"Krupier wygrywa: {DealerScore} vs {PlayerScore}.";
             history = $"przegrana ({PlayerScore} vs {DealerScore})";
+            IsPlayerWinner = false;
         }
         else
         {
             verdict = $"Remis na {PlayerScore}.";
             history = $"remis ({PlayerScore})";
+            IsPlayerWinner = false;
         }
 
         Status = verdict + " Nacisnij \"Rozdaj\", aby zagrac ponownie.";
@@ -171,6 +191,86 @@ public partial class BlackjackViewModel : GameViewModelBase
     {
         HitCommand.NotifyCanExecuteChanged();
         StandCommand.NotifyCanExecuteChanged();
+    }
+
+    private void StartConfetti()
+    {
+        StopConfetti();
+        // spawn initial burst
+        for (int i = 0; i < 24; i++)
+            Confetti.Add(CreateConfetto());
+
+        _confettiTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(40) };
+        _confettiTimer.Tick += (_, _) =>
+        {
+            for (int i = Confetti.Count - 1; i >= 0; i--)
+            {
+                var c = Confetti[i];
+                c.X += c.VX;
+                c.Y += c.VY;
+                c.VY += 0.25; // gravity
+                c.Angle += c.VA;
+                c.Opacity -= 0.02;
+                if (c.Opacity <= 0 || c.Y > 800)
+                    Confetti.RemoveAt(i);
+            }
+            // spawn a few more while fading
+            if (Confetti.Count < 20 && _rng.NextDouble() < 0.3)
+                Confetti.Add(CreateConfetto());
+        };
+        _confettiTimer.Start();
+    }
+
+    private void StopConfetti()
+    {
+        if (_confettiTimer is not null)
+        {
+            _confettiTimer.Stop();
+            _confettiTimer = null;
+        }
+        Confetti.Clear();
+    }
+
+    private Confetto CreateConfetto()
+    {
+        double vx = (_rng.NextDouble() - 0.5) * 6.0;
+        double vy = -(_rng.NextDouble() * 6 + 2);
+        var brushes = new[] { Avalonia.Media.Brushes.Gold, Avalonia.Media.Brushes.Crimson, Avalonia.Media.Brushes.LimeGreen, Avalonia.Media.Brushes.DodgerBlue };
+        return new Confetto
+        {
+            X = 160 + (_rng.NextDouble() - 0.5) * 200,
+            Y = 0,
+            VX = vx,
+            VY = vy,
+            Angle = _rng.NextDouble() * 360,
+            VA = (_rng.NextDouble() - 0.5) * 10,
+            Opacity = 1.0,
+            Size = 6 + _rng.Next(10),
+            Brush = brushes[_rng.Next(brushes.Length)]
+        };
+    }
+
+    public class Confetto : ObservableObject
+    {
+        private double _x;
+        private double _y;
+        private double _vx;
+        private double _vy;
+        private double _angle;
+        private double _va;
+        private double _opacity;
+        private double _size;
+        private Avalonia.Media.IBrush? _brush;
+
+        public double X { get => _x; set => SetProperty(ref _x, value); }
+        public double Y { get => _y; set => SetProperty(ref _y, value); }
+        public double VX { get => _vx; set => SetProperty(ref _vx, value); }
+        public double VY { get => _vy; set => SetProperty(ref _vy, value); }
+        public double Angle { get => _angle; set => SetProperty(ref _angle, value); }
+        public double VA { get => _va; set => SetProperty(ref _va, value); }
+        public double Opacity { get => _opacity; set => SetProperty(ref _opacity, value); }
+        public double Size { get => _size; set => SetProperty(ref _size, value); }
+        public Avalonia.Media.IBrush? Brush { get => _brush; set => SetProperty(ref _brush, value); }
     }
 
     partial void OnIsRoundActiveChanged(bool value) => NotifyCommandsChanged();

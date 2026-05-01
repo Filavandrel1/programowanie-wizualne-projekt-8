@@ -28,7 +28,8 @@
         </Style>
     </UserControl.Styles>
 
-    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="16" Background="{StaticResource TableBg}">
+    <Grid>
+        <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="16" Background="{StaticResource TableBg}">
         <!-- Nagłówek -->
         <StackPanel Grid.Row="0" Spacing="2">
             <TextBlock Text="🂡 Pasjans Klondike" FontSize="22" FontWeight="Bold" Foreground="White"/>
@@ -265,5 +266,25 @@
                     Command="{Binding BackCommand}"
                     Padding="20,10" FontSize="14"/>
         </StackPanel>
+        </Grid>
+
+        <!-- Win overlay -->
+        <Grid IsVisible="{Binding IsGameWon}" Background="#80000000">
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border Background="#1A1A1A" Padding="28" CornerRadius="12" BorderBrush="#9B6BD8" BorderThickness="2">
+                    <StackPanel Spacing="12" HorizontalAlignment="Center" Width="480">
+                        <TextBlock Text="🎉 Wygrana!" FontSize="28" FontWeight="Bold" Foreground="#FFD24A" HorizontalAlignment="Center"/>
+                        <TextBlock Text="Ułożyłeś pasjansa — brawo!" Foreground="White" HorizontalAlignment="Center"/>
+                        <Button Content="Zagraj ponownie" Command="{Binding DealCommand}" HorizontalAlignment="Center" Padding="12,8" Background="#9B6BD8" Foreground="White"/>
+                    </StackPanel>
+                </Border>
+                <Canvas IsHitTestVisible="False">
+                    <Ellipse Fill="#FFD24A" Width="12" Height="12" Canvas.Left="-60" Canvas.Top="-30"/>
+                    <Ellipse Fill="#FF6B6B" Width="10" Height="10" Canvas.Left="100" Canvas.Top="-40"/>
+                    <Ellipse Fill="#6BCB77" Width="11" Height="11" Canvas.Left="-20" Canvas.Top="70"/>
+                    <Ellipse Fill="#4D96FF" Width="9" Height="9" Canvas.Left="140" Canvas.Top="60"/>
+                </Canvas>
+            </Grid>
+        </Grid>
     </Grid>
 </UserControl>
