@@ -1,0 +1,116 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:projekt8plsdzialaj.ViewModels"
+             x:Class="projekt8plsdzialaj.Views.BlackjackView"
+             x:DataType="vm:BlackjackViewModel">
+    <Grid RowDefinitions="Auto,*,Auto,Auto" RowSpacing="14" Margin="24" Background="#0E1F14">
+        <!-- Naglowek -->
+        <StackPanel Grid.Row="0" Spacing="4">
+            <TextBlock Text="{Binding Title}" FontSize="28" FontWeight="Bold" Foreground="White"/>
+            <TextBlock Text="{Binding Description}" Foreground="#B5D6C2"/>
+        </StackPanel>
+
+        <!-- Dwie rece -->
+        <Grid Grid.Row="1" RowDefinitions="*,*" RowSpacing="14">
+            <!-- KRUPIER -->
+            <Border Grid.Row="0" CornerRadius="14" Padding="18"
+                    Background="#1A1A1A" BorderBrush="#3A3A3A" BorderThickness="1">
+                <Grid RowDefinitions="Auto,*">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="14">
+                        <TextBlock Text="🤖 Krupier" FontSize="20" FontWeight="SemiBold" Foreground="White"/>
+                        <Border Background="#333" CornerRadius="8" Padding="10,4" VerticalAlignment="Center">
+                            <TextBlock Foreground="White" FontWeight="Bold">
+                                <Run Text="Oczka:"/>
+                                <Run Text="{Binding DealerVisibleScore}"/>
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,12,0,0">
+                        <ItemsControl ItemsSource="{Binding DealerVisibleHand}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="10"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="80" Height="120" CornerRadius="10"
+                                            Background="#FAFAFA" BorderBrush="#222" BorderThickness="2"
+                                            BoxShadow="0 4 10 0 #80000000">
+                                        <TextBlock Text="{Binding}" FontSize="22" FontWeight="Bold"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                   Foreground="#101010"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+
+            <!-- GRACZ -->
+            <Border Grid.Row="1" CornerRadius="14" Padding="18"
+                    Background="#1A1A1A" BorderBrush="#1FAE6B" BorderThickness="1">
+                <Grid RowDefinitions="Auto,*">
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="14">
+                        <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="White">
+                            <Run Text="🙋"/>
+                            <Run Text="{Binding PlayerName}"/>
+                        </TextBlock>
+                        <Border Background="#0E5C3A" CornerRadius="8" Padding="10,4" VerticalAlignment="Center">
+                            <TextBlock Foreground="White" FontWeight="Bold">
+                                <Run Text="Oczka:"/>
+                                <Run Text="{Binding PlayerScore}"/>
+                            </TextBlock>
+                        </Border>
+                    </StackPanel>
+                    <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Margin="0,12,0,0">
+                        <ItemsControl ItemsSource="{Binding PlayerHand}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" Spacing="10"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Width="80" Height="120" CornerRadius="10"
+                                            Background="#FAFAFA" BorderBrush="#222" BorderThickness="2"
+                                            BoxShadow="0 4 10 0 #80000000">
+                                        <TextBlock Text="{Binding}" FontSize="22" FontWeight="Bold"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                   Foreground="#101010"/>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- Status -->
+        <Border Grid.Row="2" Background="#1A1A1A" CornerRadius="10" Padding="18"
+                BorderBrush="#333" BorderThickness="1">
+            <TextBlock Text="{Binding Status}" Foreground="White" FontSize="15" TextWrapping="Wrap"/>
+        </Border>
+
+        <!-- Przyciski -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+            <Button Content="🎴 Rozdaj"
+                    Command="{Binding DealCommand}"
+                    Padding="22,10" FontSize="15" FontWeight="SemiBold"
+                    Background="#1FAE6B" Foreground="White"/>
+            <Button Content="➕ Dobierz"
+                    Command="{Binding HitCommand}"
+                    Padding="22,10" FontSize="15" FontWeight="SemiBold"
+                    Background="#3666C8" Foreground="White"/>
+            <Button Content="✋ Stop"
+                    Command="{Binding StandCommand}"
+                    Padding="22,10" FontSize="15" FontWeight="SemiBold"
+                    Background="#C0202A" Foreground="White"/>
+            <Button Content="← Powrot do menu"
+                    Command="{Binding BackCommand}"
+                    Padding="18,10" FontSize="14"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

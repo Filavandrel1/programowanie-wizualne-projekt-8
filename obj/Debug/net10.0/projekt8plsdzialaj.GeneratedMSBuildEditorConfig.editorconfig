@@ -31,17 +31,26 @@ build_property.EnableCodeStyleSeverity =
 [/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/HistoryView.axaml]
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/BlackjackView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/MainWindow.axaml]
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/GameView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/HiLoView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/HistoryView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/SolitaireView.axaml]
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/MenuView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/Windows 10/Desktop/Programowanie/Programowanie Wizualne/Projket8/programowanie-wizualne-projekt-8/Views/WarView.axaml]
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/SolitaireView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[/Users/filavandrel/uczelnia/C\#/projekt8plsdzialaj/Views/WarView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

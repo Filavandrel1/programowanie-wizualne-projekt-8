@@ -50,6 +50,11 @@
             <Button Content="🎴 Rozdaj"
                     Command="{Binding DealCommand}"
                     Padding="20,10" FontSize="16" FontWeight="SemiBold"/>
+            <Button Content="🏳️ Poddaj się"
+                    Command="{Binding SurrenderCommand}"
+                    Padding="20,10" FontSize="16" FontWeight="SemiBold"
+                    Background="#D84A4A" Foreground="White"
+                    IsVisible="{Binding CanSurrender}"/>
             <Button Content="← Powrót do menu"
                     Command="{Binding BackCommand}"
                     Padding="20,10" FontSize="16"/>

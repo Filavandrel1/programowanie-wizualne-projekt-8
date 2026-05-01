@@ -34,6 +34,11 @@ public class ViewLocator : IDataTemplate
             return new Views.HiLoView();
         }
 
+        if (param is ViewModels.BlackjackViewModel)
+        {
+            return new Views.BlackjackView();
+        }
+
         if (param is ViewModels.GameViewModelBase)
         {
             return new Views.GameView();

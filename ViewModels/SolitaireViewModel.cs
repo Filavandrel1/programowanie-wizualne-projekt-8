@@ -87,7 +87,7 @@ public partial class SolitaireViewModel : GameViewModelBase
         ElapsedDisplay = "00:00";
         Status = "Powodzenia! Czerwone na czarne, malejąco. As idzie na stos końcowy.";
         SolveCommand.NotifyCanExecuteChanged();
-        SurrenderCommand.NotifyCanExecuteChanged();
+        GiveUpCommand.NotifyCanExecuteChanged();
     }
 
     private static List<SolitaireCard> BuildDeck()
@@ -372,7 +372,7 @@ public partial class SolitaireViewModel : GameViewModelBase
             Status = $"🎉 Brawo! Ułożyłeś pasjansa w czasie {ElapsedDisplay}.";
             RecordResult($"ułożono w {ElapsedDisplay}");
             SolveCommand.NotifyCanExecuteChanged();
-            SurrenderCommand.NotifyCanExecuteChanged();
+            GiveUpCommand.NotifyCanExecuteChanged();
         }
     }
 
@@ -427,7 +427,7 @@ public partial class SolitaireViewModel : GameViewModelBase
     }
 
     [RelayCommand(CanExecute = nameof(CanFinish))]
-    private void Surrender()
+    private void GiveUp()
     {
         StopClock();
         Status = "Poddałeś się – pasjans nie został ułożony.";
@@ -441,7 +441,7 @@ public partial class SolitaireViewModel : GameViewModelBase
         IsRunning = false;
         ElapsedDisplay = FormatTime(_stopwatch.Elapsed);
         SolveCommand.NotifyCanExecuteChanged();
-        SurrenderCommand.NotifyCanExecuteChanged();
+        GiveUpCommand.NotifyCanExecuteChanged();
     }
 
     private bool CanFinish() => IsRunning;
@@ -449,7 +449,7 @@ public partial class SolitaireViewModel : GameViewModelBase
     partial void OnIsRunningChanged(bool value)
     {
         SolveCommand.NotifyCanExecuteChanged();
-        SurrenderCommand.NotifyCanExecuteChanged();
+        GiveUpCommand.NotifyCanExecuteChanged();
     }
 
     private static string FormatTime(TimeSpan t) =>

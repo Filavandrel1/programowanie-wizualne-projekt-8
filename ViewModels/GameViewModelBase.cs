@@ -17,6 +17,11 @@ public abstract partial class GameViewModelBase : ViewModelBase
     /// </summary>
     public abstract string GameName { get; }
 
+    /// <summary>
+    /// Czy gra pozwala na poddanie się (np. Wojna).
+    /// </summary>
+    public virtual bool CanSurrender => false;
+
     [ObservableProperty]
     private string _playerName = "Gość";
 
@@ -41,7 +46,16 @@ public abstract partial class GameViewModelBase : ViewModelBase
     [RelayCommand]
     private void Deal() => DealCore();
 
+    [RelayCommand]
+    private void Surrender() => SurrenderCore();
+
     protected abstract void DealCore();
+
+    protected virtual void SurrenderCore()
+    {
+        RecordResult("poddanie");
+        Status = "Poddano się — koniec gry.";
+    }
 
     /// <summary>
     /// Zapisuje rezultat rozgrywki do historii.

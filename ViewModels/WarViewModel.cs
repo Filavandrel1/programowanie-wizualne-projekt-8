@@ -9,6 +9,7 @@ public partial class WarViewModel : GameViewModelBase
     public override string Title => "Wojna";
     public override string Description => "Rozgrywka przeciwko komputerowi — wyższa karta wygrywa rundę.";
     public override string GameName => "Wojna";
+    public override bool CanSurrender => true;
 
     private const string PlayerLabel = "Ty";
     private const string ComputerLabel = "Komputer";
@@ -34,8 +35,6 @@ public partial class WarViewModel : GameViewModelBase
 
     public string Player1Name => PlayerLabel;
     public string Player2Name => ComputerLabel;
-
-    public override string GameName => "Wojna";
 
     public WarViewModel()
     {
@@ -95,6 +94,7 @@ public partial class WarViewModel : GameViewModelBase
                 : _player1Deck.Count == 0
                     ? "Koniec gry — wygrał Komputer!"
                     : "Koniec gry — wygrałeś!";
+            RecordResult(_player1Deck.Count == 0 ? "przegrana" : "wygrana");
             return;
         }
 
@@ -195,7 +195,7 @@ public partial class WarViewModel : GameViewModelBase
         var p2Value = GetRankValue(p2Face);
 
         summary = $"Wojna! Ty kładziesz {faceDownCount1} zakrytą kartę{(faceDownCount1 == 1 ? "" : "y")}, " +
-                  $"Komputer kładzie {faceDownCount2} zakrytą karte{(faceDownCount2 == 1 ? "" : "y")}." +
+                  $"Komputer kładzie {faceDownCount2} zakryte kart{(faceDownCount2 == 1 ? "" : "y")}." +
                   $" Ty: {p1Face}   |   Komputer: {p2Face}";
 
         if (p1Value > p2Value)
@@ -234,5 +234,11 @@ public partial class WarViewModel : GameViewModelBase
     {
         var rank = card.Substring(0, card.Length - 1);
         return Array.IndexOf(Ranks, rank);
+    }
+
+    protected override void SurrenderCore()
+    {
+        RecordResult("poddanie");
+        Status = "Poddano się — koniec gry. Komputer wygrał.";
     }
 }
