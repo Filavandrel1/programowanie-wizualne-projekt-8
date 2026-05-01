@@ -28,6 +28,13 @@ public partial class MenuViewModel : ViewModelBase
     private void StartSolitaire() => RequestLogin("Pasjans", name => new SolitaireViewModel { PlayerName = name });
 
     [RelayCommand]
+    private void StartHiLo()
+    {
+        var vm = new HiLoViewModel { PlayerName = "Anonim" };
+        GameSelected?.Invoke(vm);
+    }
+
+    [RelayCommand]
     private void ShowHistory() => HistoryRequested?.Invoke();
 
     private void RequestLogin(string gameTitle, Func<string, GameViewModelBase> factory)
