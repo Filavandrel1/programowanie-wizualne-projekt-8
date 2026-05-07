@@ -1604,25 +1604,32 @@
     ]
   },
   "packageFolders": {
-    "/Users/filavandrel/.nuget/packages/": {}
+    "C:\\Users\\zuzanna\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/filavandrel/uczelnia/C#/projekt8plsdzialaj/projekt8plsdzialaj.csproj",
+      "projectUniqueName": "C:\\Users\\zuzanna\\OneDrive\\Dokumenty\\GitHub\\programowanie-wizualne-projekt-8\\projekt8plsdzialaj.csproj",
       "projectName": "projekt8plsdzialaj",
-      "projectPath": "/Users/filavandrel/uczelnia/C#/projekt8plsdzialaj/projekt8plsdzialaj.csproj",
-      "packagesPath": "/Users/filavandrel/.nuget/packages/",
-      "outputPath": "/Users/filavandrel/uczelnia/C#/projekt8plsdzialaj/obj/",
+      "projectPath": "C:\\Users\\zuzanna\\OneDrive\\Dokumenty\\GitHub\\programowanie-wizualne-projekt-8\\projekt8plsdzialaj.csproj",
+      "packagesPath": "C:\\Users\\zuzanna\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\zuzanna\\OneDrive\\Dokumenty\\GitHub\\programowanie-wizualne-projekt-8\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/filavandrel/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\zuzanna\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
-        "/opt/homebrew/Cellar/dotnet/10.0.103/libexec/library-packs": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1641,7 +1648,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "10.0.200"
     },
     "frameworks": {
       "net10.0": {
@@ -1688,7 +1695,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/10.0.103/libexec/sdk/10.0.103/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.201/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

@@ -52,6 +52,36 @@ public partial class BlackjackViewModel : GameViewModelBase
         Status = "Nacisnij \"Rozdaj\", aby rozpoczac runde.";
     }
 
+    [RelayCommand(CanExecute = nameof(CanPeek))]
+    private void Peek()
+    {
+        if (!CanPeek()) return;
+
+        // 50% chance to be caught: if caught, dealer immediately reveals hole and wins the round.
+        bool caught = _rng.NextDouble() < 0.5;
+        IsHoleRevealed = true;
+        RebuildDealerVisible();
+        RecalculateScores();
+
+        if (caught)
+        {
+            // Caught peeking -> dealer wins immediately
+            IsRoundActive = false;
+            IsRoundOver = true;
+            IsPlayerWinner = false;
+            Status = "Zostales zlapany na podgladzie! Krupier wygrywa.";
+            RecordResult($"przegrana (zlapany przy podgladzie {PlayerScore} vs {DealerScore})");
+            NotifyCommandsChanged();
+            return;
+        }
+
+        // Not caught: player sees hole but game continues (player may choose to hit/stand).
+        Status = $"Udalo sie! Zobaczyles karte krupiera: {DealerHand[1]}. Twoje oczka: {PlayerScore}.";
+        NotifyCommandsChanged();
+    }
+
+    private bool CanPeek() => IsRoundActive && !IsRoundOver && !IsHoleRevealed;
+
     partial void OnIsPlayerWinnerChanged(bool value)
     {
         if (value)
@@ -191,6 +221,7 @@ public partial class BlackjackViewModel : GameViewModelBase
     {
         HitCommand.NotifyCanExecuteChanged();
         StandCommand.NotifyCanExecuteChanged();
+        PeekCommand.NotifyCanExecuteChanged();
     }
 
     private void StartConfetti()
@@ -335,6 +366,7 @@ public partial class BlackjackViewModel : GameViewModelBase
     {
         RebuildDealerVisible();
         RecalculateScores();
+        NotifyCommandsChanged();
     }
 
     private static int ScoreHand(IEnumerable<string> hand)

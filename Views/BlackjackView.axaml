@@ -109,6 +109,10 @@
                     Command="{Binding StandCommand}"
                     Padding="22,10" FontSize="15" FontWeight="SemiBold"
                     Background="#C0202A" Foreground="White"/>
+            <Button Content="👀 Podejrzyj (ryzyko)"
+                    Command="{Binding PeekCommand}"
+                    Padding="18,10" FontSize="14" FontWeight="SemiBold"
+                    Background="#F0A500" Foreground="White"/>
             <Button Content="← Powrot do menu"
                     Command="{Binding BackCommand}"
                     Padding="18,10" FontSize="14"/>
